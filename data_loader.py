@@ -1,3 +1,5 @@
+"Extracting filename metadata and extracting the data from the files"
+
 import os
 from typing import Dict, Any, Tuple
 import numpy as np
