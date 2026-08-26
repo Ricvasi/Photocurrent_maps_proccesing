@@ -33,7 +33,7 @@ def plot_spatial_map(data: np.ndarray, scale_x: float, scale_y: float,
     Plots the spatial heatmap with micron scale axes with optional annotations.
     """
     plt.figure()
-    im = plt.imshow(data, cmap="inferno", origin="lower", aspect = "auto")#, vmin = 0, vmax=15)
+    im = plt.imshow(data, cmap="inferno", origin="lower", aspect = data.shape[0] / data.shape[1])#, vmin = 0, vmax=15)
     
     label = r"$I_{ph}$ [pA]" if is_photocurrent else r"$\varphi$ [°]"
     cbar = plt.colorbar(im, label=label, pad = 0.03, fraction = 0.04, aspect = 30)
@@ -48,7 +48,7 @@ def plot_spatial_map(data: np.ndarray, scale_x: float, scale_y: float,
     total_microns_y = data.shape[0]*scale_y
     
     ticks_um_x = generate_automatic_ticks(total_microns_x, nticks=5)
-    ticks_px_x = ticks_um/scale_x
+    ticks_px_x = ticks_um_x/scale_x
     ax.set_xticks(ticks_px_x)
     ax.set_xticklabels([f"{int(v)}" if v>= 10 else f"{v:.1f}" for v in ticks_um_x])
     
@@ -59,7 +59,7 @@ def plot_spatial_map(data: np.ndarray, scale_x: float, scale_y: float,
     
     ax.set_xlim(-0.5, data.shape[1]-0.5)
     ax.set_ylim(-0.5, data.shape[0]-0.5)
-    plt.tight_layout()
+    plt.tight_layout() #not needed if layout="constraint" is present
     
     # Dynamic annotations (Circles + Arrows)
     if annotations:
@@ -70,7 +70,7 @@ def plot_spatial_map(data: np.ndarray, scale_x: float, scale_y: float,
                 text_label,
                 xy=(px_x, px_y),
                 xytext=(offset_x, offset_y),
-                textcoords="A",
+                textcoords="offset points",
                 color="white",
                 fontsize=18,
                 ha="center",
@@ -96,7 +96,7 @@ def plot_linecuts(x_um: np.ndarray, linecuts_data: List[Dict[str, Any]],
     ylabel = r"$I_{ph}$ [pA]" if is_photocurrent else r"$\varphi$ [°]"
     plt.ylabel(ylabel)
     plt.xlabel(r"$x$ [$\mu$m]")
-    plt.legend(loc="upper right", frameon=False)
+    plt.legend(loc="best", frameon=False)
     plt.tight_layout()
     
     if output_path:
