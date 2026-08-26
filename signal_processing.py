@@ -6,6 +6,7 @@ from scipy.optimize import curve_fit
 from typing import Tuple, List
 from matplotlib.legend_handler import HandlerTuple
 import matplotlib.lines as mlines
+import matplotlib.pyplot as plt
 
 def gauss(x:np.ndarray, i0: float, a:float, x0: float, sigma: float) -> np.ndarray:
     """ 1D Gaussian profile function for photocurrent hotspot size analysis """
@@ -63,29 +64,32 @@ def plot_peak_fits(x_data: np.ndarray, peaks_dict: List[Dict[str, Any]],
     output_path: Optional[str] = None) -> None:
     """
     Plots isolated peaks alongside their Gaussian fit curves.
-    
-    peaks_dict format:
-    [
-        {
-            "x_dense": array,
-            "peak_raw": array,
-            "fit_curve": array,
-            "label": str,
-            "color_dot": str,
-            "color_line": str
-        },
-        ...
-    ]
     """
     plt.figure()
     handles = []
     labels = []
 
     for item in peaks_dict:
-        # Scatter for measured data and line for Gaussian fit
-        dot = mlines.Line2D(x_data, item["peak_raw"], color=item["color_dot"], marker="o", linestyle="None")
-        fit_line = mlines.Line2D(item["x_dense"], item["fit_curve"], color=item["color_line"], linestyle="--")
+        #Plot raw data scatter points on the axes
+        #Use item["x_masked"] if provided, otherwise fall back to x_data
+        x_pts = item.get("x_masked", x_data)
+        dot, = plt.plot(
+            x_pts, 
+            item["peak_raw"], 
+            color=item["color_dot"], 
+            marker="o", 
+            linestyle="None"
+        )
         
+        #Plot smooth Gaussian fit line on the axes
+        fit_line, = plt.plot(
+            item["x_dense"], 
+            item["fit_curve"], 
+            color=item["color_line"], 
+            linestyle="--"
+        )
+        
+        #Combine both markers into a single legend entry
         handles.append((dot, fit_line))
         labels.append(item["label"])
 
