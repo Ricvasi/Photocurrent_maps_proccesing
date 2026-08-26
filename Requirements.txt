@@ -1,0 +1,7 @@
+You need these Python libraries: 
+  numpy
+  matplotlib
+  scipy
+  re
+  os
+  
