@@ -11,11 +11,11 @@ def main():
     plot_style() #figure styling
 
     #setup paths
-    data_dir = os.path.join("data", "raw")
-    output_dir = "figures"
+    data_dir = "/home/ricvasi/Desktop/MATFYZ/bakalárka/new_contacts/20251127vasilega_9_14device"
+    output_dir = "/home/ricvasi/Desktop/MATFYZ/bakalárka/whole_of_code_finalized_version/test"
     os.makedirs(output_dir, exist_ok=True)
     
-    filename = "25.11.2025_8.45_D5GR2_140p0uW_10e9A_405nm_P60V_longscan_lockin_R.txt"
+    filename = "27.11.2025_12.30_D5GR2_26p0uW_10e9A_355nm_P60V_longscan_lockin_R.txt"
     filepath = os.path.join(data_dir, filename)
 
     if not os.path.exists(filepath):
@@ -23,7 +23,7 @@ def main():
         return
 
     #load data
-    npdata, scan_info = load_scan_file(filepath)
+    npdata, scan_info, meta = load_scan_file(filepath)
     
     #-------------------------------------------------
     #Interactive median filtering (uncomment to use)
@@ -31,16 +31,16 @@ def main():
     
     #-------------------------------------------------
     #Spatial map plot
-    Enable_spatial_plot = True
+    enable_spatial_plot = False
     if enable_spatial_plot:
         #annotations format: [(x_um, y_um, "Label", offset_x, offset_y)]
         #uncommect to use:
-        #annotations = [(153, 210, "A", -35, -35)]
+        annotations = None#[(153, 210, "A", -35, -35)]
         
         plot_type = "photocurrent" if meta["is_r"] else "phase"
         #use extra to put additional info (linecuts, filtered, etc.)
-        out_name = build_output_filename(meta, plot_type, extra="map")
-        out_path = os..path.join(output_dir, out_name)
+        out_name = build_output_filename(meta, plot_type, extra="annot")
+        out_path = os.path.join(output_dir, out_name)
         
         plot_spatial_map(
             data = npdata, 
@@ -60,8 +60,8 @@ def main():
         #select pixel rows for linecuts
         y_idx1, y_idx2 = 35, 36
         linecuts_payload = [
-            {"y_slice": npdata[y_idx1], "label": f"Row {y_idx1} (Point A)", "color": "#d31f11"},
-            {"y_slice": npdata[y_idx2], "label": f"Row {y_idx2} (Ref)", "color": "#f47a00"},
+            {"y_slice": npdata[y_idx1], "label": f"Point A", "color": "#d31f11"},
+            {"y_slice": npdata[y_idx2], "label": f"Ref", "color": "#f47a00"},
         ]
         
         out_name_linecut = build_output_filename(meta, "linecut", extra=f"y{y_idx1}_{y_idx2}")
@@ -76,15 +76,15 @@ def main():
     
     #-----------------------------------------------------------
     #Gaussian peak fitting and fwhm extraction
-    enable_gauss_fit = False
+    enable_gauss_fit = False 
     if enable_gauss_fit:
         from src.signal_processing import fit_photocurrent_peak
-        from src.plotting import plot_peak_fits
+        from src.signal_processing import plot_peak_fits
 
         x_um = np.arange(npdata.shape[1]) * scan_info["scale_x"]
         
         #Isolate peak by subtracting adjacent row (background subtraction)
-        y_idx = 35
+        y_idx = 36
         peak_isolated = npdata[y_idx] - npdata[y_idx + 1]
 
         #Define spatial mask around hotspot (e.g., between 75 um and 115 um)
@@ -112,16 +112,15 @@ def main():
         from src.signal_processing import gauss
         fit_curve = gauss(x_dense, *popt)
 
-        peaks_payload = [
-            {
-                "x_dense": x_dense,
-                "peak_raw": peak_masked,
-                "fit_curve": fit_curve,
-                "label": r"$+60$ V, point A",
-                "color_dot": "#d31f11",
-                "color_line": "#f47a00"
-            }
-        ]
+        peaks_payload = [{
+            "x_masked": x_masked,
+            "x_dense": x_dense,
+            "peak_raw": peak_masked,
+            "fit_curve": fit_curve,
+            "label": r"$+60$ V, point A",
+            "color_dot": "#d31f11",
+            "color_line": "#f47a00"
+        }]
 
         out_name_fit = build_output_filename(meta, "gauss_fit", extra=f"row{y_idx}")
         out_path_fit = os.path.join(output_dir, out_name_fit)
@@ -131,5 +130,6 @@ def main():
             peaks_dict=peaks_payload,
             output_path=out_path_fit
         )
+        
 if __name__ == "__main__":
     main()
