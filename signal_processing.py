@@ -1,7 +1,7 @@
 """ Fitting functions and spatial signal processing """
 
 import numpy as np
-from scipy.ndimpage import median_filter as scipy_median_filter
+from scipy.ndimage import median_filter as scipy_median_filter
 from scipy.optimize import curve_fit
 from typing import Tuple, List
 
@@ -40,7 +40,7 @@ def local_median_filter(data: np.ndarray, x:np.ndarray, y:np.ndarray,
         if len(ix) == 0 or len(iy) == 0:
             continue
         
-        sub = data[np.ix(iy, ix)] #creates the masked data for filtering
+        sub = data[np.ix_(iy, ix)] #creates the masked data for filtering
         filtered[np.ix_(iy, ix)] = scipy_median_filter(sub, size=size)
         
     return filtered #returns fitered data in absolute coordinates
@@ -48,7 +48,7 @@ def local_median_filter(data: np.ndarray, x:np.ndarray, y:np.ndarray,
 def fit_photocurrent_peak(x_um:np.ndarray, signal:np.ndarray, p0: List[float],
                           bounds: Tuple[List[float], List[float]]) -> Tuple[np.ndarray, np.ndarray, float, float]:
     """ Fits a Gaussian profile to photocurrent linecuts and calculates FWHM with errors """
-    popt, pcov = curve_fit(gaussian, x_um, signal, p0=p0, bounds=bounds)
+    popt, pcov = curve_fit(gauss, x_um, signal, p0=p0, bounds=bounds)
     perr = np.sqrt(np.diag(pcov))
     
     sigma_fit = popt[3]
