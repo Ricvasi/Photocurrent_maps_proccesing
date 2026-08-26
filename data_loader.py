@@ -57,12 +57,12 @@ def load_scan_file(filepath: str, amplifier_gain: float = 1e9) -> Tuple[np.ndarr
     
     npdata = np.array(data)
     
-    x_start = coordinates[15:24]
-    y_start = coordinates[42:50]
-    x_end = coordinates[67:75]
-    y_end = coordinates[92:100]
-    x_pixels = coordinates[114:118]
-    y_pixels = coordinates[128:132]
+    x_start = float(coordinates[15:24])
+    y_start = float(coordinates[42:50])
+    x_end = float(coordinates[67:75])
+    y_end = float(coordinates[92:100])
+    x_pixels = float(coordinates[114:118])
+    y_pixels = float(coordinates[128:132])
     
     scale_x = (x_end - x_start)/x_pixels
     scale_y = (y_end - y_start)/y_pixels
