@@ -11,11 +11,11 @@ def main():
     plot_style() #figure styling
 
     #setup paths
-    data_dir = "/home/ricvasi/Desktop/MATFYZ/bakalárka/new_contacts/20251127vasilega_9_14device"
+    data_dir = "/home/ricvasi/Desktop/MATFYZ/bakalárka/new_contacts/20251125vasilega_9_14device"
     output_dir = "/home/ricvasi/Desktop/MATFYZ/bakalárka/whole_of_code_finalized_version/test"
     os.makedirs(output_dir, exist_ok=True)
     
-    filename = "27.11.2025_12.30_D5GR2_26p0uW_10e9A_355nm_P60V_longscan_lockin_R.txt"
+    filename = "25.11.2025_8.45_D5GR2_140p0uW_10e9A_405nm_P60V_longscan_lockin_phase.txt"
     filepath = os.path.join(data_dir, filename)
 
     if not os.path.exists(filepath):
@@ -27,19 +27,19 @@ def main():
     
     #-------------------------------------------------
     #Interactive median filtering (uncomment to use)
-    #npdata = interactive_median_filter(npdata, scan_info["x_vec"], scan_info["y_vec"])
-    
+    npdata = interactive_median_filter(npdata, scan_info["x_vec"], scan_info["y_vec"])
+
     #-------------------------------------------------
     #Spatial map plot
-    enable_spatial_plot = False
+    enable_spatial_plot = True
     if enable_spatial_plot:
         #annotations format: [(x_um, y_um, "Label", offset_x, offset_y)]
         #uncommect to use:
-        annotations = None#[(153, 210, "A", -35, -35)]
+        annotations = None #[(90, 120, "A", -35, 35)]
         
         plot_type = "photocurrent" if meta["is_r"] else "phase"
         #use extra to put additional info (linecuts, filtered, etc.)
-        out_name = build_output_filename(meta, plot_type, extra="annot")
+        out_name = build_output_filename(meta, plot_type, extra="filtered")
         out_path = os.path.join(output_dir, out_name)
         
         plot_spatial_map(
@@ -117,7 +117,7 @@ def main():
             "x_dense": x_dense,
             "peak_raw": peak_masked,
             "fit_curve": fit_curve,
-            "label": r"$+60$ V, point A",
+            "label": r"$+60$ V, A",
             "color_dot": "#d31f11",
             "color_line": "#f47a00"
         }]
@@ -128,6 +128,8 @@ def main():
         plot_peak_fits(
             x_data=x_masked,
             peaks_dict=peaks_payload,
+            fwhm=fwhm, 
+            fwhm_err=fwhm_err, 
             output_path=out_path_fit
         )
         
