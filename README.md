@@ -4,7 +4,11 @@ Python pipeline for loading, median filtering, and plotting 2D spatial photocurr
 
 
 ## Representative outputs
-
+![Photocurrent_map_with_annotation](figures/27.11.2025_12.30_355nm_26p0uW_P60V_photocurrent_annot.pdf)
+![Photocurrent_1D_linecuts](figures/27.11.2025_12.30_355nm_26p0uW_P60V_linecut_y35_36.pdf)
+![Isolated_hotspot_peak_gauss_fit](figures/27.11.2025_12.30_355nm_26p0uW_P60V_gauss_fit_row36.pdf)
+![Phase_map](figures/25.11.2025_8.45_405nm_140p0uW_P60V_phase.pdf)
+![Median_filtered_phase_map](figures/25.11.2025_8.45_405nm_140p0uW_P60V_phase_filtered.pdf)
 
 ## Features
 
