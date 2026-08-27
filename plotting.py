@@ -33,7 +33,7 @@ def plot_spatial_map(data: np.ndarray, scale_x: float, scale_y: float,
     Plots the spatial heatmap with micron scale axes with optional annotations.
     """
     plt.figure()
-    im = plt.imshow(data, cmap="inferno", origin="lower", aspect = data.shape[0] / data.shape[1])#, vmin = 0, vmax=15)
+    im = plt.imshow(data, cmap="inferno", origin="lower", aspect = data.shape[0] / data.shape[1])#, vmin = 0, vmax=12)
     
     label = r"$I_{ph}$ [pA]" if is_photocurrent else r"$\varphi$ [°]"
     cbar = plt.colorbar(im, label=label, pad = 0.03, fraction = 0.04, aspect = 30)
