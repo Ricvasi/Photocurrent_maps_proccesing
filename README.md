@@ -26,5 +26,5 @@ Python pipeline for loading, median filtering, and plotting 2D spatial photocurr
 │   ├── plotting.py           # 2D heatmap & annotation rendering
 │   └── signal_processing.py  # Gaussian fitting routines & peak plotting
 ├── data/                     # Sample measurement files
-└── media/                    # Figures for documentation
+└── figures/                    # Figures for documentation
 
