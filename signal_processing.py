@@ -61,6 +61,7 @@ def fit_photocurrent_peak(x_um:np.ndarray, signal:np.ndarray, p0: List[float],
     return popt, perr, fwhm, fwhm_err
 
 def plot_peak_fits(x_data: np.ndarray, peaks_dict: List[Dict[str, Any]],
+    fwhm: Optional[float] = None, fwhm_err: Optional[float] = None, 
     output_path: Optional[str] = None) -> None:
     """
     Plots isolated peaks alongside their Gaussian fit curves.
@@ -88,6 +89,15 @@ def plot_peak_fits(x_data: np.ndarray, peaks_dict: List[Dict[str, Any]],
             color=item["color_line"], 
             linestyle="--"
         )
+        
+        #plot the fwhm annotation (uncomment if needed)
+        if fwhm is not None and fwhm_err is not None:
+            plt.annotate(
+                rf"FWHM = {fwhm:.2f} $\pm$ {fwhm_err:.2f} $\mu$m", 
+                xy=(90, 3),
+                xytext=(-110, -50),                        
+                textcoords="offset points",
+                )
         
         #Combine both markers into a single legend entry
         handles.append((dot, fit_line))
