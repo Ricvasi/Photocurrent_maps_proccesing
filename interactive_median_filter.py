@@ -105,7 +105,8 @@ def interactive_median_filter(data: np.ndarray, x: np.ndarray,
         ],
         origin="lower",
         aspect="auto",
-        cmap="inferno"
+        cmap="inferno",
+        #vmin = 0, vmax=12 #this can be commented out, this cuts of some noise to see the real data clearly
     )
 
     ax.set_xlabel("x [µm]")
