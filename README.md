@@ -4,7 +4,7 @@ Python pipeline for loading, median filtering, and plotting 2D spatial photocurr
 
 
 ## Representative outputs
-
+![Photocurrent_map_with_annotation](figures/27.11.2025_12.30_355nm_26p0uW_P60V_photocurrent_annot.pdf)
 
 ## Features
 
