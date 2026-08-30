@@ -6,7 +6,7 @@ Python pipeline for loading, median filtering, and plotting 2D spatial photocurr
 ## Representative outputs
 
 ### Photocurrent map with annotation, 1D hotspot linecut and isolated hotspot peak Gaussian fit
-<img width="500" height="400" alt="Photocurrent_map_with_annotation" src="https://github.com/user-attachments/assets/ed1150bc-903e-4ea0-a423-65c82f097ad0" />
+<img width="480" height="390" alt="Photocurrent_map_with_annotation" src="https://github.com/user-attachments/assets/ed1150bc-903e-4ea0-a423-65c82f097ad0" />
 <img width="500" height="400" alt="1D_linecut_of_photocurrent_hotspot" src="https://github.com/user-attachments/assets/dbf6f9a8-d2e9-4bcc-ab3c-9bb3a194b0f6" />
 <img width="500" height="400" alt="isolated_hotspot_peak_gauss_peak" src="https://github.com/user-attachments/assets/75384517-adb6-4162-be58-1727f347a15c" />
 
