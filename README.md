@@ -1,6 +1,6 @@
 # Photocurrent and phase maps processing
 
-Python pipeline for loading, median filtering, and plotting 2D spatial photocurrent ($I_{ph}$) and phase ($\varphi$) maps, featuring background subtraction and Gaussian peak fitting for 1D linecut analysis.
+Python pipeline for loading, median filtering, and plotting 2D spatial photocurrent ($I_{ph}$) and phase ($\varphi$) maps, featuring background subtraction and Gaussian peak fitting for 1D linecut analysis to analyse and process data from measurements on 6H-SiC/graphene interface device with the goal of mapping photocurrent hotspots suggesting a possible defect/point defect locations in the device.
 
 
 ## Representative outputs
@@ -18,13 +18,13 @@ Python pipeline for loading, median filtering, and plotting 2D spatial photocurr
 
 ## Features
 
-- **2D spatial heatmaps:** Automated scaling ($\mu\text{m}$ coordinates), aspect ratio locking, and dynamic annotation overlays.
+- **2D spatial heatmaps:** Automated scaling ($\mu\text{m}$ coordinates), aspect ratio locking, max and min values cut-out, and dynamic annotation overlays.
 - **Signal Processing:** Interactive median filtering for electrical noise spikes removal and linecut background subtraction.
 - **Gaussian Peak Fitting:** Curve fitting via `scipy.optimize.curve_fit` with FWHM calculation and custom dual-marker legend handles.
 - **Publication Ready:** Automatic high-DPI export (`dpi=600`) with constrained layout formatting perfect for publication-ready figures.
 
 ---
-## Code structure 
+## Pipeline structure 
 
 
 
@@ -41,5 +41,5 @@ Python pipeline for loading, median filtering, and plotting 2D spatial photocurr
 │   ├── plotting.py           # 2D heatmap and annotation rendering
 │   └── signal_processing.py  # Gaussian fitting routines and peak plotting
 ├── data/                     # Sample measurement files
-└── figures/                    # Representative figures of each major code feature
+└── figures/                  # Representative figures of each major code feature
 
