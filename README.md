@@ -26,8 +26,7 @@ Python pipeline for loading, median filtering, and plotting 2D spatial photocurr
 ---
 ## Pipeline structure 
 
-
-
+<img width="640" height="604" alt="pipeline_structure" src="https://github.com/user-attachments/assets/8c3b3bc3-d538-4a18-aad6-5836bcf15fb1" />
 
 ---
 ## Repository structure
